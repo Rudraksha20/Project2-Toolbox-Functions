@@ -4,6 +4,33 @@
 const THREE = require('three'); // older modules are imported like this. You shouldn't have to worry about this much
 import Framework from './framework'
 
+var freq = {
+    Frequency: 600
+}
+var amp = {
+    Amplitude: 7
+}
+
+var d = {
+    Dance: 56
+}
+
+var o ={
+    Orient: 0
+}
+
+var toggle = false;
+
+var windspeed = {
+    WindSpeed: 0
+    }
+
+var scale = {
+    ScaleFeathers: 1
+}
+
+var toggle1 = false;
+
 // called after the scene loads
 function onLoad(framework) {
     var scene = framework.scene;
@@ -36,7 +63,7 @@ function onLoad(framework) {
     ] );
 
     scene.background = skymap;
-
+    
     // load a simple obj mesh
     var objLoader = new THREE.OBJLoader();
     objLoader.load('/geo/feather.obj', function(obj) {
@@ -44,10 +71,7 @@ function onLoad(framework) {
         // LOOK: This function runs after the obj has finished loading
         var featherGeo = obj.children[0].geometry;
 
-//        var featherMesh = new THREE.Mesh(featherGeo, lambertWhite);
-//        featherMesh.name = "feather";
-//        scene.add(featherMesh);
-//     
+        
         //base curve
         var curve = new THREE.CatmullRomCurve3( [
 	       new THREE.Vector3( 0, 0, 0 ),
@@ -93,6 +117,40 @@ function onLoad(framework) {
                 
                 //adding the feathures to the scene
                 scene.add(new_fm);
+                
+                //-------------------------------------------------------------------
+                //second feather
+                var new_fm = new THREE.Mesh(featherGeo, lambertWhite);
+                new_fm.name = "feather" + i + 30;
+                var f_pos = curve.getPoint(i / (no_of_feathers_base - 1));
+    
+                
+                //setting up the feather pos on the curve points 
+                new_fm.position.x = f_pos.x;
+                new_fm.position.y = f_pos.y;
+                new_fm.position.z = -f_pos.z;
+            
+                //scaling the feathers
+                new_fm.scale.set(f_pos.x + 1,1,1);
+                
+                if(i == no_of_feathers_base - 11)
+                    {
+                        new_fm.rotateY( -(no_of_feathers_base - 11 - i - 1) * 1.5 * 2 * Math.PI / 180);
+                    }
+                
+                //rotating the feathers towards the end
+                if(i >= no_of_feathers_base - 10)
+                    {
+                        //console.log(new_fm.position.z);
+                        //new_fm.position.z = 3.65;
+                        new_fm.rotateY( -(no_of_feathers_base - 10 - i - 1) * 5 * 2 * Math.PI / 180);    
+                    }
+                
+                //rotating the feathers by a slight value
+                new_fm.rotateY(8 * Math.PI / 180);
+                
+                //adding the feathures to the scene
+                scene.add(new_fm);
             }
         
         
@@ -101,13 +159,13 @@ function onLoad(framework) {
         for(var i =1; i < no_of_feathers_top1; i++)
             {
                 var new_fm = new THREE.Mesh(featherGeo, lambertLB);
-                new_fm.name = "feather" + i + 30;
+                new_fm.name = "feather" + i + 60;
                 var f_pos = curve.getPoint(i / (no_of_feathers_top1 - 1));
     
                 
                 //setting up the feather pos on the curve points 
                 new_fm.position.x = f_pos.x;
-                new_fm.position.y = f_pos.y + 0.065;
+                new_fm.position.y = f_pos.y + 0.07;
                 new_fm.position.z = f_pos.z + 0.1;
             
                 //scaling the feathers
@@ -132,6 +190,40 @@ function onLoad(framework) {
                 
                 //adding the feathures to the scene
                 scene.add(new_fm);
+                
+                //-------------------------------------------------------------------
+                var new_fm = new THREE.Mesh(featherGeo, lambertLB);
+                new_fm.name = "feather" + i + 90;
+                var f_pos = curve.getPoint(i / (no_of_feathers_top1 - 1));
+    
+                
+                //setting up the feather pos on the curve points 
+                new_fm.position.x = f_pos.x;
+                new_fm.position.y = f_pos.y + 0.07;
+                new_fm.position.z = -(f_pos.z + 0.1);
+            
+                //scaling the feathers
+                new_fm.scale.set(f_pos.x + 0.6,1,1);
+                
+                if(i == no_of_feathers_top1 - 11)
+                    {
+                        new_fm.rotateY( -(no_of_feathers_top1 - 11 - i - 1) * 1.5 * 2 * Math.PI / 180);
+                    }
+                
+                //rotating the feathers towards the end
+                if(i >= no_of_feathers_top1 - 10)
+                    {
+                        //console.log(new_fm.position.z);
+                        //new_fm.position.z = 3.65;
+                        new_fm.rotateY( -(no_of_feathers_top1 - 10 - i - 1) * 5 * 2 * Math.PI / 180);    
+                    }
+            
+                
+                //rotating the feathers by a slight value
+                new_fm.rotateY(10 * Math.PI / 180);
+                
+                //adding the feathures to the scene
+                scene.add(new_fm);
             }
         
 
@@ -140,7 +232,7 @@ function onLoad(framework) {
         for(var i =1; i < no_of_feathers_top2; i++)
             {
                 var new_fm = new THREE.Mesh(featherGeo, lambertG);
-                new_fm.name = "feather" + i + 60;
+                new_fm.name = "feather" + i + 120;
                 var f_pos = curve.getPoint(i / (no_of_feathers_top2 - 1));
     
                 
@@ -170,6 +262,41 @@ function onLoad(framework) {
                 
                 //adding the feathures to the scene
                 scene.add(new_fm);
+                
+                //-------------------------------------------------------------------
+                var new_fm = new THREE.Mesh(featherGeo, lambertG);
+                new_fm.name = "feather" + i + 150;
+                var f_pos = curve.getPoint(i / (no_of_feathers_top2 - 1));
+    
+                
+                //setting up the feather pos on the curve points 
+                new_fm.position.x = f_pos.x;
+                new_fm.position.y = f_pos.y + 0.15;
+                new_fm.position.z = -(f_pos.z + 0.15);
+            
+                //scaling the feathers
+                new_fm.scale.set(f_pos.x + 0.3,1,1);
+                
+                if(i == no_of_feathers_top2 - 11)
+                    {
+                        new_fm.scale.set(0.35,1,1);
+                        new_fm.rotateY( -(no_of_feathers_top2 - 11 - i - 1) * 1.5 * 2 * Math.PI / 180);
+                    }
+                
+                //rotating the feathers towards the end
+                if(i >= no_of_feathers_top2 - 10)
+                    {
+                        new_fm.scale.set(0.4,1,1);
+                        //console.log(new_fm.position.z);
+                        //new_fm.position.z = 3.65;
+                        new_fm.rotateY( -(no_of_feathers_top2 - 10 - i - 1) * 5 * 2 * Math.PI / 180);    
+                    }
+            
+                
+                //adding the feathures to the scene
+                scene.add(new_fm);
+
+                
             }
         
         });
@@ -187,6 +314,34 @@ function onLoad(framework) {
     gui.add(camera, 'fov', 0, 180).onChange(function(newVal) {
         camera.updateProjectionMatrix();
     });
+    
+    //gui for changing falpping attributes
+    gui.add(freq, 'Frequency', 10, 1000).onChange(function(newVal1) {
+        flapping.Frequency = newVal1;
+    });
+    
+    gui.add(amp, 'Amplitude', 0.001, 10).onChange(function(newVal2) {
+        flapping.Amplitude = newVal2;
+    });
+    
+    gui.add(d, 'Dance', 0.01, 200).onChange(function(newVal3) {
+        d.Dance = newVal3;
+    });
+    
+    gui.add(o, 'Orient', 0, 360, 1).onChange(function(newVal4) {
+        o.Orient = newVal4;
+        toggle = true;
+    });
+    
+    gui.add(windspeed, 'WindSpeed', 0, 25, 1).onChange(function(newVal5) {
+        windspeed.WindSpeed = newVal5;
+    });
+    
+    gui.add(scale, 'ScaleFeathers', 1, 10, 0.5).onChange(function(newVal6) {
+        scale.ScaleFeathers = newVal6;
+        toggle1 = true;
+    });
+    
 }
 
 // called on frame updates
@@ -198,51 +353,181 @@ function onUpdate(framework) {
         //feather.rotateZ(Math.sin(date.getTime() / 100) * 2 * Math.PI / 180);        
     }
     
+    var frequency = (1000-freq.Frequency);
+    var amplitude = (10 - amp.Amplitude);
+    var dance = d.Dance;
+    var orient = o.Orient;
+    var windsp = windspeed.WindSpeed;
+    var scaleF = scale.ScaleFeathers;
+    
     //flapping wings!!!
     for(var i = 1 ;i < 31; i++)
         {
-            var base_feather = framework.scene.getObjectByName("feather" + i);
-            if(base_feather !== undefined){
             var date = new Date();
-            //base_feather.position.y = Math.sin(date.getTime() * base_feather.position.z * Math.PI / 180);
-            //base_feather.position.y = base_feather.position.y + (Math.sin(date.getTime() / 100)); //good
-            //top2_feather.position.y = Math.sin(date.getTime() * top2_feather.position.z * Math.PI / 180);
+            var val_date = date.getTime();
+            
+            var base_f_ypos = 0;
+            var top1_f_ypos = 0;
+            var top2_f_ypos = 0;
+            
+            //base feathers----------------------------------------------------------
+            //base feather
+            var base_feather = framework.scene.getObjectByName("feather" + i);
+            if(base_feather !== undefined){   
+            
+            base_feather.position.y = base_feather.position.z *  Math.sin(((base_feather.position.z * dance +val_date)/frequency) % 360) / amplitude;
+            
+            base_f_ypos = base_feather.position.y;    
+            //X orientation
+                if(toggle === true){
+            base_feather.rotateX(orient);
+                }
                 
-            //base_feather.rotateX(Math.sin(date.getTime() / 1000 * base_feather.position.z) * 10 * Math.PI / 180);    
-//            base_feather.position.y = (base_feather.position.y + Math.sin(base_feather.position.z)) + Math.sin(date.getTime() / 10);    
+            //wind effects
+                //base_feather.rotateX(math.sin(val_date));
+            base_feather.position.x = Math.sin( (base_feather.position.x * base_feather.position.z * val_date / 100) % 360) / (30-windsp);
+              
+            //feather size
+            if(toggle1 === true){              
+                base_feather.scale.set(scaleF, 1, 1);
+                //base_feather.scale.addScalar(scaleF);
+                }
                 
-            //base_feather.rotateX(60*Math.sin(10*date.getTime()));
                 
-                base_feather.position.y = Math.sin(date.getTime() / 800 * base_feather.position.z) / 10;
+            }
+            
+            //base feather1
+            var base_feather1 = framework.scene.getObjectByName("feather" + i + 30);
+            if(base_feather1 !== undefined){   
+            
+//            base_feather1.position.y = -(base_feather1.position.z *  Math.sin(((base_feather1.position.z * dance +val_date)/frequency) % 360) / amplitude);
+                base_feather1.position.y = base_f_ypos;
+                
+            //X orientation
+                if(toggle === true){
+            base_feather1.rotateX(orient);
+                }
+                
+            //wind effects
+                //base_feather.rotateX(math.sin(val_date));
+            base_feather1.position.x = Math.sin( (base_feather1.position.x * base_feather1.position.z * val_date / 100) % 360) / (30-windsp);
+              
+            //feather size
+            if(toggle1 === true){
+                base_feather1.scale.set(scaleF, 1, 1);
+                }    
+                
             }
             
             
-            var top1_feather = framework.scene.getObjectByName("feather" + i + 30);
+            
+            //top1 feathers------------------------------------------------------------
+            //top1 feathers
+            var top1_feather = framework.scene.getObjectByName("feather" + i + 60);
             if(top1_feather !== undefined){
             var date = new Date();
-            //base_feather.position.y = Math.sin(date.getTime() * base_feather.position.z * Math.PI / 180);
-            //top1_feather.position.y = top1_feather.position.y + (Math.sin(date.getTime() / 100)); //good
-            //top2_feather.position.y = Math.sin(date.getTime() * top2_feather.position.z * Math.PI / 180);
-            
-            //top1_feather.rotateX(Math.sin(date.getTime() / 1000 * top1_feather.position.z) * 10 * Math.PI / 180);
-            
-                top1_feather.position.y = Math.sin(date.getTime() / 800 * top1_feather.position.z) / 10;    
+                
+            top1_feather.position.y = top1_feather.position.z * Math.sin(((top1_feather.position.z * dance +val_date)/frequency) % 360) / amplitude;
+                
+                
+            top1_f_ypos = top1_feather.position.y;    
+            //X orientation
+                if(toggle === true){
+            top1_feather.rotateX(orient);  
+                }
+                
+            //wind effects
+                //base_feather.rotateX(math.sin(val_date));
+                top1_feather.position.x = Math.sin( (top1_feather.position.x * top1_feather.position.z * val_date / 100) % 360) / (30 - windsp);
+                
+                //feather size
+                if(toggle1 === true){
+                top1_feather.scale.set(scaleF, 1, 1);
+                }
+                
             }
             
-            var top2_feather = framework.scene.getObjectByName("feather" + i + 60);
+            //top1 feathers1
+            var top1_feather1 = framework.scene.getObjectByName("feather" + i + 90);
+            if(top1_feather1 !== undefined){
+            var date = new Date();
+                
+//            top1_feather1.position.y = -(top1_feather1.position.z * Math.sin(((top1_feather1.position.z * dance +val_date)/frequency) % 360) / amplitude);
+                
+                top1_feather1.position.y = top1_f_ypos;
+                
+            //X orientation
+                if(toggle === true){
+            top1_feather1.rotateX(orient);  
+                }
+                
+            //wind effects
+                //base_feather.rotateX(math.sin(val_date));
+                top1_feather1.position.x = Math.sin( (top1_feather1.position.x * top1_feather1.position.z * val_date / 100) % 360) / (30 - windsp);
+                
+                //feather size
+                if(toggle1 === true){
+                top1_feather1.scale.set(scaleF, 1, 1);
+                }
+                
+            }
+            
+            
+            //top2 feathers--------------------------------------------------------------------------
+            //top2 feather
+            var top2_feather = framework.scene.getObjectByName("feather" + i + 120);
             if(top2_feather !== undefined){
             var date = new Date();
-            //base_feather.position.y = Math.sin(date.getTime() * base_feather.position.z * Math.PI / 180);
-            //top2_feather.position.y = top2_feather.position.y + (Math.sin(date.getTime() / 100)); //good
-            //top2_feather.position.y = Math.sin(date.getTime() * top2_feather.position.z * Math.PI / 180);
-            
-            //top2_feather.rotateX(Math.sin(date.getTime() / 1000 * top2_feather.position.z) * 10 * Math.PI / 180);
-            
-                top2_feather.position.y = Math.sin(date.getTime() / 800 * top2_feather.position.z) / 10;    
+                
+            top2_feather.position.y = top2_feather.position.z * Math.sin(((top2_feather.position.z * dance +val_date)/frequency) % 360) / amplitude;
+                
+            top2_f_ypos = top2_feather.position.y;    
+                
+            //X orientation
+                if(toggle === true){
+            top2_feather.rotateX(orient);  
+                }
+                
+            //wind effects
+                //base_feather.rotateX(math.sin(val_date));
+                top2_feather.position.x = Math.sin( (top2_feather.position.x * top2_feather.position.z * val_date / 100) % 360) / (30 - windsp);
+                
+                //feather size
+                if(toggle1 === true){
+                top2_feather.scale.set(scaleF, 1, 1);
+                }
+                
             }
             
+            //top2 feather1
+            var top2_feather1 = framework.scene.getObjectByName("feather" + i + 150);
+            if(top2_feather1 !== undefined){
+            var date = new Date();
+                
+//            top2_feather1.position.y = -(top2_feather1.position.z * Math.sin(((top2_feather1.position.z * dance +val_date)/frequency) % 360) / amplitude);
+                
+                top2_feather1.position.y = top2_f_ypos;
+                
+            //X orientation
+                if(toggle === true){
+            top2_feather1.rotateX(orient);  
+                }
+                
+            //wind effects
+                //base_feather.rotateX(math.sin(val_date));
+                top2_feather1.position.x = Math.sin( (top2_feather1.position.x * top2_feather1.position.z * val_date / 100) % 360) / (30 - windsp);
+                
+                //feather size
+                if(toggle1 === true){
+                top2_feather1.scale.set(scaleF, 1, 1);
+                }
+                
+            }
+            
+            
         }
-    
+    toggle = false;
+    toggle1 = false;
 }
 
 // when the scene is done initializing, it will call onLoad, then on frame updates, call onUpdate
