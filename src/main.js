@@ -317,11 +317,11 @@ function onLoad(framework) {
     
     //gui for changing falpping attributes
     gui.add(freq, 'Frequency', 10, 1000).onChange(function(newVal1) {
-        flapping.Frequency = newVal1;
+        freq.Frequency = newVal1;
     });
     
     gui.add(amp, 'Amplitude', 0.001, 10).onChange(function(newVal2) {
-        flapping.Amplitude = newVal2;
+        amp.Amplitude = newVal2;
     });
     
     gui.add(d, 'Dance', 0.01, 200).onChange(function(newVal3) {
